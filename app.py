@@ -117,7 +117,7 @@ def jie_eryuan(a,b,c):
     if dt < 0:
         return False
     elif dt >= 0:
-        return (-b + dt**0.5) / 2*a , (-b - dt**0.5) / 2*a
+        return (-b + dt**0.5) / (2*a) , (-b - dt**0.5) / (2*a)
 
 #相对原子质量（正价在前）
 dict_fenzi = {'K':39,'Ca':40,'Mn':55,'Ag':108,'Cu':64,'Ba':137,'Hg':201,'Fe':56,'Zn':65,
