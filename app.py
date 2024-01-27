@@ -111,13 +111,13 @@ class Oumu(object):
         if self.P is not None and self.T is not None:
             return self.P * self.T
 
-#函数解二元一次方程（传入abc）
+#函数：解二元一次方程（传入a，b，c）
 def jie_eryuan(a,b,c):
     dt = b**2-4*a*c
     if dt < 0:
         return False
     elif dt >= 0:
-        return (-b + dt**0.5) / (2*a) , (-b - dt**0.5) / (2*a)
+        return [(-b + dt**0.5) / (2*a) , (-b - dt**0.5) / (2*a)]
 
 #相对原子质量（正价在前）
 dict_fenzi = {'K':39,'Ca':40,'Mn':55,'Ag':108,'Cu':64,'Ba':137,'Hg':201,'Fe':56,'Zn':65,
@@ -126,7 +126,7 @@ dict_fenzi = {'K':39,'Ca':40,'Mn':55,'Ag':108,'Cu':64,'Ba':137,'Hg':201,'Fe':56,
               'OH':17,'NO3':62,'SO4':96,'CO3':60}
 
 #判断是否已知某两个值
-is_ur = is_ui=is_rp=is_up=is_ip=is_iwt = False
+is_ur = is_ui=is_rp=is_up=is_ip=is_iwt = is_ir= False
 #几个主屏幕
 main_box = toga.Box()
 main_box2 = toga.Box()
@@ -560,7 +560,7 @@ ax3²+bx3+c=y3.
             if not x:
                 out = '该方程无实数根！'
             else:
-                out = f'x1 = {x[0]}, x2 = {x[1]}'
+                out = f'x1 = {x[0]}, \nx2 = {x[1]}'
             print_yyecfc.text = out
 
         fc_lb = toga.Label('解一元二次方程ax²+bx+c=0\n在下面的方框里依次直接输入a,b,c值（用空格隔开）')
@@ -607,60 +607,70 @@ ax3²+bx3+c=y3.
 
         #求电学值部分
         def ur(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt, is_ir
             u_.value = r_.value = ""
             t_.value = '1'
             p_.value = w_.value = i_.value = '*这里不要填！！！'
 
             is_ur = True
-            is_ui = is_rp = is_up = is_ip = is_iwt = False
+            is_ui = is_rp = is_up = is_ip = is_iwt = is_ir =  False
 
         def ui(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt, is_ir
             u_.value = i_.value = ""
             t_.value = '1'
             r_.value = w_.value = p_.value = '*这里不要填！！！'
 
             is_ui = True
-            is_ur = is_rp = is_up = is_ip = is_iwt = False
+            is_ur = is_rp = is_up = is_ip = is_iwt = is_ir =  False
 
         def rp(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt , is_ir
             r_.value = p_.value = ""
             t_.value = '1'
             u_.value = i_.value = w_.value = '*这里不要填！！！'
 
             is_rp = True
-            is_ur = is_ui = is_up = is_ip = is_iwt = False
+            is_ur = is_ui = is_up = is_ip = is_iwt = is_ir =  False
 
         def up(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt, is_ir
             u_.value = p_.value = ""
             t_.value = '1'
             r_.value = i_.value = w_.value = '*这里不要填！！！'
 
             is_up = True
-            is_ur = is_ui = is_rp = is_ip = is_iwt = False
+            is_ur = is_ui = is_rp = is_ip = is_iwt = is_ir =  False
 
         def ip(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt, is_ir
             i_.value = p_.value = ""
             t_.value = '1'
             r_.value = u_.value = w_.value = '*这里不要填！！！'
 
             is_ip = True
-            is_ur = is_ui = is_rp = is_up = is_iwt = False
+            is_ur = is_ui = is_rp = is_up = is_iwt = is_ir = False
 
         def iwt(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt , is_ir
             i_.value = w_.value = t_.value = ""
             r_.value = u_.value = p_.value = '*这里不要填！！！'
 
             is_iwt = True
-            is_ur = is_ui = is_rp = is_ip = is_up = False
+            is_ur = is_ui = is_rp = is_ip = is_up = is_ir = False
+
+        def ir(widget):
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt , is_ir
+            i_.value = r_.value = ""
+            t_.value = '1'
+            u_.value = p_.value = w_.value = '*这里不要填！！！'
+
+            is_ir = True
+            is_ur = is_ui = is_rp = is_up = is_iwt = is_ip = False
+
 
         def ur_out(widget):
-            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt
+            global u_, r_, i_, p_, w_, t_, is_ur, is_ui, is_rp, is_up, is_ip, is_iwt,is_ir
             if is_ur:
                 oumu = Oumu(U=float(u_.value), R=float(r_.value), T=float(t_.value))
             elif is_ui:
@@ -673,6 +683,9 @@ ax3²+bx3+c=y3.
                 oumu = Oumu(I=float(i_.value), P=float(p_.value), T=float(t_.value))
             elif is_iwt:
                 oumu = Oumu(I=float(i_.value), W=float(w_.value), T=float(t_.value))
+            elif is_ir:
+                oumu = Oumu(I=float(i_.value), R=float(r_.value), T=float(t_.value))
+
 
             i_.value = oumu.output()['I']
             u_.value = oumu.output()['U']
@@ -698,6 +711,9 @@ ax3²+bx3+c=y3.
 
         button6 = toga.Button('已知 I,W,T', on_press=iwt)
         main_box.add(button6)
+
+        button7 = toga.Button('已知 I,R', on_press=ir)
+        main_box.add(button7)
 
         u = toga.Label('电压（V）：')
         ubox = toga.Box()
